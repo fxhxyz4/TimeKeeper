@@ -1,0 +1,4 @@
+Newtonsoft.Json
+MySql.Data
+dotenv.net
+xunit
