@@ -1,8 +1,8 @@
 using MassTransit;
 using TimeKeeper.Modules;
-using TimeKeeper.Modules.DataBase;
 using TimeKeeper.Modules.Queue;
 using TimeKeeper.Modules.Utils;
+using TimeKeeper.Modules.DataBase;
 
 namespace TimeKeeper.Controllers;
 

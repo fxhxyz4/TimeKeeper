@@ -45,7 +45,7 @@ public partial class MainWindow
                     DataGridService.UpdateDataGrid(PersonDataGrid);
 
                     DataBaseTransaction.DelToDB(selectedPerson, _bus);
-                    Logger.WriteLog($"{selectedPerson} покинув територію частини\n\n");
+                    Logger.WriteLog($"{selectedPerson.FirstName} {selectedPerson.LastName} покинув територію частини\n\n");
                 }
 
                 e.Handled = true;

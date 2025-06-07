@@ -21,6 +21,8 @@ public partial class MainWindow
         string rankDescription = rankItem?.Description.Trim() ?? "";
         string positionDescription = positionItem?.Description.Trim() ?? "";
 
+        ClearInput();
+
         if (CheckStaff.IsStaff(positionItem.Value))
         {
             return new Staff(firstName, secondName, year, rankDescription, positionDescription, true);
@@ -28,6 +30,20 @@ public partial class MainWindow
         {
             return new Person(firstName, secondName, year, rankDescription, positionDescription);
         }
+    }
+
+    private void ClearInput()
+    {
+        NameTextBox.Text = "";
+        SurnameTextBox.Text = "";
+
+        BirthYearTextBox.Text = "";
+
+        var rankToSelect = RankComboBox.Items.Cast<EnumItem<Rank>>().FirstOrDefault(x => x.Value == Rank.Rekrut);
+        RankComboBox.SelectedItem = rankToSelect;
+
+        var posToSelect = PositionComboBox.Items.Cast<EnumItem<Position>>().FirstOrDefault(x => x.Value == Position.Gosti);
+        PositionComboBox.SelectedItem = posToSelect;
     }
 
     private async void addBtn_Click(object sender, EventArgs e)
