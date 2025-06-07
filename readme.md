@@ -9,6 +9,8 @@
 ![](https://img.shields.io/github/downloads/fxhxyz4/TimeKeeper/total)
 ![](https://img.shields.io/github/languages/code-size/fxhxyz4/TimeKeeper)
 ![](https://img.shields.io/github/license/fxhxyz4/TimeKeeper)
+
+<img src="./assets/img/screen.png" width="500" height="380" />
     
 </div>
 
