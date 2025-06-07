@@ -4,6 +4,7 @@
 ########
 # Misc #
 ########
+appsettings.json
 old_code.txt
 DB_INIT.txt
 nuget.exe
