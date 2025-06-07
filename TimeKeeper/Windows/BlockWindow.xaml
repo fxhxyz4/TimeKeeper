@@ -1,0 +1,18 @@
+<Window x:Class="TimeKeeper.Windows.BlockWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeKeeper.Windows"
+        mc:Ignorable="d"
+        Title="TimeKeeper" Height="640" Width="820" MinHeight="580" MinWidth="720" Background="White" Foreground="Red">
+    <Grid>
+        <TextBlock
+            Text="Blocked"
+            FontSize="44"
+            FontWeight="Bold"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+        />
+    </Grid>
+</Window>

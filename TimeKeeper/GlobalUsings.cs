@@ -1,0 +1,12 @@
+global using Utils;
+global using System;
+global using Xunit.Sdk;
+global using System.IO;
+global using System.Text;
+global using System.Linq;
+global using System.Windows;
+global using System.Reflection;
+global using System.ComponentModel;
+global using System.Threading.Tasks;
+global using System.Windows.Threading;
+global using System.Collections.Generic;
