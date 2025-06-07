@@ -4,6 +4,8 @@
 ########
 # Misc #
 ########
+csv
+json
 appsettings.json
 old_code.txt
 DB_INIT.txt
