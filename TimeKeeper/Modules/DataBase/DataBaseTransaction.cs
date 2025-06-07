@@ -74,8 +74,6 @@ class DataBaseTransaction
         }
     }
 
-
-
     public static async Task DelToDB(Person person, IBus bus)
     {
         try
