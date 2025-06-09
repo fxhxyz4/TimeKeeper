@@ -1,5 +1,5 @@
 using System.Windows.Controls;
-using TimeKeeper.Controllers;
+using TimeKeeper.Modules.Controllers;
 using TimeKeeper.Modules.Data;
 using TimeKeeper.Modules.Utils;
 

@@ -1,7 +1,7 @@
 using System.Security.Principal;
 using TimeKeeper.Modules.Utils;
 using TimeKeeper.Windows;
-using TimeKeeper.Controllers;
+using TimeKeeper.Modules.Controllers;
 
 namespace TimeKeeper;
 

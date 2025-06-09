@@ -1,7 +1,7 @@
 using TimeKeeper.Modules.Utils;
 using TimeKeeper.Modules.DataBase;
 
-namespace TimeKeeper.Controllers;
+namespace TimeKeeper.Modules.Controllers;
 
 public class BlockUserController
 {
