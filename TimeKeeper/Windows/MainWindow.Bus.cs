@@ -8,7 +8,7 @@ public partial class MainWindow
     private async void Window_Loaded(object sender, RoutedEventArgs e)
     {
         await StartBusAsync();
-        DataBaseTransaction.UpdateDB();
+        _repo.UpdateDB();
     }
 
     private async Task StartBusAsync()

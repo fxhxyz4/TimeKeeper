@@ -64,7 +64,7 @@ public partial class MainWindow
             return;
         }
 
-        await DataBaseTransaction.AddToDB(person, _bus);
+        _repo.Add(person, _bus);
 
         Files.UpdateCsv(person.ToString());
         Files.UpdateJson(person);

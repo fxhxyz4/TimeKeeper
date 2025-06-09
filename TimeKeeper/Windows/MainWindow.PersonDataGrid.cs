@@ -44,7 +44,7 @@ public partial class MainWindow
 
                     DataGridService.UpdateDataGrid(PersonDataGrid);
 
-                    DataBaseTransaction.DelToDB(selectedPerson, _bus);
+                    _repo.Delete(selectedPerson, _bus);
                     Logger.WriteLog($"{selectedPerson.FirstName} {selectedPerson.LastName} покинув територію частини\n\n");
                 }
 

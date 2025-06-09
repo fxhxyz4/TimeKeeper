@@ -1,28 +1,41 @@
+using MassTransit;
 using MySql.Data.MySqlClient;
+using TimeKeeper.Modules.Data;
+using TimeKeeper.Modules.Queue;
+using TimeKeeper.Modules.Utils;
 
 namespace TimeKeeper.Modules.DataBase;
 
 public class PersonRepository
 {
-    public void Add(Person person)
+    public async Task Add(Person person, IBus bus)
     {
-        using var conn = DatabaseConnector.GetConnection();
-        conn.Open();
+        try
+        {
+            using MySqlConnection conn = DatabaseConnector.GetConnection();
+            conn.Open();
 
-        string query = "INSERT INTO Persons (`first_name`, `last_name`, `year_of_birth`, `rank`, `position`, `date_time`) " +
-                       "VALUES (@FirstName, @SecondName, @Year, @Rank, @Position, @Date)";
+            string query = "INSERT INTO Persons (`first_name`, `last_name`, `year_of_birth`, `rank`, `position`, `date_time`) " +
+                           "VALUES (@FirstName, @SecondName, @Year, @Rank, @Position, @Date)";
 
-        using var cmd = new MySqlCommand(query, conn);
-        cmd.Parameters.AddWithValue("@FirstName", person.FirstName);
+            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@FirstName", person.FirstName);
+                cmd.Parameters.AddWithValue("@SecondName", person.LastName);
+                cmd.Parameters.AddWithValue("@Year", person.YearOfBirth);
+                cmd.Parameters.AddWithValue("@Rank", person.Rank);
+                cmd.Parameters.AddWithValue("@Position", person.Position);
+                cmd.Parameters.AddWithValue("@Date", $"{Time.CurrentDateForFile} {Time.CurrentTimeStamp}");
 
-        cmd.Parameters.AddWithValue("@SecondName", person.LastName);
-        cmd.Parameters.AddWithValue("@Year", person.YearOfBirth);
+                cmd.ExecuteNonQuery();
+            }
 
-        cmd.Parameters.AddWithValue("@Rank", person.Rank);
-        cmd.Parameters.AddWithValue("@Position", person.Position);
-
-        cmd.Parameters.AddWithValue("@Date", $"{Time.CurrentDateForFile} {Time.CurrentTimeStamp}");
-        cmd.ExecuteNonQuery();
+            await bus.Publish(new DbChangedEvent("add", "ready"));
+        }
+        catch (Exception ex)
+        {
+            ErrorNotifier.Display(ErrorMessages.DbTransactionError + " " + ex.Message);
+        }
     }
 
     public List<Person> GetAll()
@@ -51,23 +64,68 @@ public class PersonRepository
         return people;
     }
 
-    public void Delete(Person person)
+    public void UpdateDB()
     {
-        using var conn = DatabaseConnector.GetConnection();
-        conn.Open();
+        try
+        {
+            using MySqlConnection conn = DatabaseConnector.GetConnection();
+            conn.Open();
 
-        string query = "DELETE FROM Persons WHERE `first_name` = @FirstName AND `last_name` = @SecondName " +
-                       "AND `year_of_birth` = @Year AND `rank` = @Rank AND `position` = @Position";
+            string query = "SELECT `first_name`, `last_name`, `year_of_birth`, `rank`, `position`, `date_time` FROM Persons";
 
-        using var cmd = new MySqlCommand(query, conn);
-        cmd.Parameters.AddWithValue("@FirstName", person.FirstName);
+            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+            using (MySqlDataReader reader = cmd.ExecuteReader())
+            {
+                PersonList.Clear();
 
-        cmd.Parameters.AddWithValue("@SecondName", person.LastName);
-        cmd.Parameters.AddWithValue("@Year", person.YearOfBirth);
+                while (reader.Read())
+                {
+                    string firstName = reader.GetString("first_name");
+                    string secondName = reader.GetString("last_name");
 
-        cmd.Parameters.AddWithValue("@Rank", person.Rank);
-        cmd.Parameters.AddWithValue("@Position", person.Position);
+                    int year = reader.GetInt32("year_of_birth");
+                    string rank = reader.GetString("rank");
 
-        cmd.ExecuteNonQuery();
+                    string position = reader.GetString("position");
+                    DateTime date = reader.GetDateTime("date_time");
+
+                    Person person = new Person(firstName, secondName, year, rank, position);
+                    PersonList.Add(person);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorNotifier.Display(ErrorMessages.DbTransactionError + " " + ex.Message);
+        }
+    }
+
+    public async Task Delete(Person person, IBus bus)
+    {
+        try
+        {
+            using MySqlConnection conn = DatabaseConnector.GetConnection();
+            conn.Open();
+
+            string query = "DELETE FROM Persons WHERE `first_name` = @FirstName AND `last_name` = @SecondName " +
+                           "AND `year_of_birth` = @Year AND `rank` = @Rank AND `position` = @Position";
+
+            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@FirstName", person.FirstName);
+                cmd.Parameters.AddWithValue("@SecondName", person.LastName);
+                cmd.Parameters.AddWithValue("@Year", person.YearOfBirth);
+                cmd.Parameters.AddWithValue("@Rank", person.Rank);
+                cmd.Parameters.AddWithValue("@Position", person.Position);
+
+                cmd.ExecuteNonQuery();
+            }
+
+            await bus.Publish(new DbChangedEvent("delete", "ready"));
+        }
+        catch (Exception ex)
+        {
+            ErrorNotifier.Display(ErrorMessages.DbTransactionError + " " + ex.Message);
+        }
     }
 }

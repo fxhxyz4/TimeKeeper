@@ -11,9 +11,7 @@ public static class Logger
         try
         {
             string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName;
-            MessageBox.Show(projectRoot);
             _logPath = Path.Combine(projectRoot ?? ".", "logs");
-            MessageBox.Show(_logPath);
         }
         catch (Exception ex)
         {

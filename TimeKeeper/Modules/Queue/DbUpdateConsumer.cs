@@ -9,9 +9,11 @@ public class DbUpdatedConsumer : IConsumer<DbChangedEvent>
 
     public async Task Consume(ConsumeContext<DbChangedEvent> context)
     {
+        PersonRepository _repo = new();
+
         try
         {
-            await Task.Run(() => DataBaseTransaction.UpdateDB());
+            await Task.Run(() => _repo.UpdateDB());
 
             Application.Current.Dispatcher.Invoke(() =>
             {

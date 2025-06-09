@@ -3,6 +3,7 @@ using TimeKeeper.Modules;
 using TimeKeeper.Modules.Queue;
 using TimeKeeper.Modules.Utils;
 using TimeKeeper.Modules.DataBase;
+using TimeKeeper.Modules.Queue;
 
 namespace TimeKeeper.Controllers;
 
@@ -20,7 +21,7 @@ public class PersonController
     {
         try
         {
-            _repo.Add(person);
+            _repo.Add(person, _bus);
             _bus.Publish(new DbChangedEvent("add", "ready"));
         }
         catch (Exception ex)
@@ -33,7 +34,7 @@ public class PersonController
     {
         try
         {
-            _repo.Delete(person);
+            _repo.Delete(person, _bus);
             _bus.Publish(new DbChangedEvent("delete", "ready"));
         }
         catch (Exception ex)
