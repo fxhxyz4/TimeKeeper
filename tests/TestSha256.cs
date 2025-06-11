@@ -7,7 +7,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        string input = "3962";
+        string input = "";
         using SHA256 sha256 = SHA256.Create();
 
         byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
