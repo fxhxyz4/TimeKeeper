@@ -21,10 +21,10 @@ public class ErrorMessages {
     public static string DirectoryFoundError => "Directory not found. Please check the directory path.";
 
     // Internet connection errors
-    public string InternetConnectionError => "No internet connection. Please check your network connection.";
-    public string TimeoutError => "The request timed out. Check your connection or try again later.";
-    public string InvalidUrlError => "Invalid URL. Please check the URL format.";
-    public string ServerError => "Server error. Please try again later.";
+    public static string InternetConnectionError => "No internet connection. Please check your network connection.";
+    public static string TimeoutError => "The request timed out. Check your connection or try again later.";
+    public static string InvalidUrlError => "Invalid URL. Please check the URL format.";
+    public static string ServerError => "Server error. Please try again later.";
 
     // Database errors
     public static string DbConnectionError => "Failed to connect to the database. Please check your connection settings.";
