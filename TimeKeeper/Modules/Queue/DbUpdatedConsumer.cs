@@ -2,23 +2,28 @@ using MassTransit;
 using TimeKeeper.Modules.Queue;
 using TimeKeeper.Modules.Utils;
 using TimeKeeper.Modules.DataBase;
+using TimeKeeper.Modules.Controllers;
 
 public class DbUpdatedConsumer : IConsumer<DbChangedEvent>
 {
+    private readonly PersonController _controller;
     public static event Action? OnDbUpdated;
+
+    private static IBus _bus;
+
+    public static void Initialize(IBus bus)
+    {
+        _bus = bus;
+    }
 
     public async Task Consume(ConsumeContext<DbChangedEvent> context)
     {
-        PersonRepository _repo = new();
-
         try
         {
-            await Task.Run(() => _repo.UpdateDB());
+            PersonController controller = new PersonController(_bus);
+            await controller.UpdateDb();
 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                OnDbUpdated?.Invoke();
-            });
+            Application.Current.Dispatcher.Invoke(() => OnDbUpdated?.Invoke());
         }
         catch (Exception ex)
         {

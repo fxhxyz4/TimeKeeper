@@ -1,6 +1,4 @@
 using MassTransit;
-using TimeKeeper.Modules;
-using TimeKeeper.Modules.Queue;
 using TimeKeeper.Modules.Utils;
 using TimeKeeper.Modules.DataBase;
 using TimeKeeper.Modules.Queue;
@@ -17,12 +15,12 @@ public class PersonController
         _bus = bus;
     }
 
-    public void AddPerson(Person person)
+    public async Task AddPerson(Person person)
     {
         try
         {
-            _repo.Add(person, _bus);
-            _bus.Publish(new DbChangedEvent("add", "ready"));
+            await _repo.Add(person);
+            await _bus.Publish(new DbChangedEvent("add", "ready"));
         }
         catch (Exception ex)
         {
@@ -30,12 +28,24 @@ public class PersonController
         }
     }
 
-    public void DeletePerson(Person person)
+    public async Task UpdateDb()
     {
         try
         {
-            _repo.Delete(person, _bus);
-            _bus.Publish(new DbChangedEvent("delete", "ready"));
+            await _repo.UpdateDB();
+        }
+        catch (Exception ex)
+        {
+            ErrorNotifier.Display("Помилка при додаванні користувача: " + ex.Message);
+        }
+    }
+
+    public async Task DeletePerson(Person person)
+    {
+        try
+        {
+            await _repo.Delete(person);
+            await _bus.Publish(new DbChangedEvent("delete", "ready"));
         }
         catch (Exception ex)
         {
@@ -47,8 +57,7 @@ public class PersonController
     {
         try
         {
-            var repo = new PersonRepository();
-            return repo.GetAll();
+            return new PersonRepository().GetAll();
         }
         catch (Exception ex)
         {

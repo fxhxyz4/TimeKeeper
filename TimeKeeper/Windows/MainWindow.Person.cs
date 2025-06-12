@@ -1,8 +1,6 @@
 using TimeKeeper.Modules;
 using TimeKeeper.Modules.Enum;
-using TimeKeeper.Modules.View;
 using TimeKeeper.Modules.Utils;
-using TimeKeeper.Modules.DataBase;
 
 namespace TimeKeeper;
 
@@ -64,12 +62,12 @@ public partial class MainWindow
             return;
         }
 
-        _repo.Add(person, _bus);
+        await _controller.AddPerson(person);
 
         Files.UpdateCsv(person.ToString());
         Files.UpdateJson(person);
 
-        DataGridService.AddToDataGrid(PersonDataGrid, person);
+        _dataGridService.AddToDataGrid(person);
     }
 
     /// <summary>

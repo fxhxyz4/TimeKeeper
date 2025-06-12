@@ -63,6 +63,10 @@ class Files
                 string existingJson = File.ReadAllText(jsonFilePath);
                 people = JsonConvert.DeserializeObject<List<Person>>(existingJson) ?? new List<Person>();
             }
+            else
+            {
+                ErrorNotifier.Display(ErrorMessages.FileNotFoundError);
+            }
 
             people.Add(person);
 

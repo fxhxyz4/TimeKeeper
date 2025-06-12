@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Windows.Controls;
+using MySql.Data.MySqlClient;
 using TimeKeeper.Modules.Utils;
 
 namespace TimeKeeper;
@@ -30,6 +31,7 @@ public partial class MainWindow
 
         if (clickedButton != null)
         {
+            MySqlConnection.ClearAllPools();
             this.Close();
         }
     }

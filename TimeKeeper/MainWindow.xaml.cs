@@ -1,15 +1,18 @@
 using MassTransit;
 using TimeKeeper.Modules.View;
 using TimeKeeper.Modules.Utils;
+using TimeKeeper.Modules.Controllers;
 using Microsoft.Extensions.Configuration;
-using TimeKeeper.Modules.DataBase;
+using MySql.Data.MySqlClient;
 
 namespace TimeKeeper;
 
 public partial class MainWindow : Window
 {
-    private PersonRepository _repo = new();
     private IConfiguration _configuration;
+    private PersonController _controller;
+
+    private DataGridService _dataGridService;
     private IBusControl _bus;
 
     public MainWindow()
@@ -21,13 +24,20 @@ public partial class MainWindow : Window
         _configuration = rabbitConfig.Configuration;
 
         _ = StartBusAsync();
-        DataGridService.UpdateDataGrid(PersonDataGrid);
+        _controller = new PersonController(_bus);
+
+        _dataGridService = new DataGridService(PersonDataGrid);
 
         PersonDataGrid.PreviewKeyDown += PersonDataGrid_PreviewKeyDown;
+
+        DbUpdatedConsumer.Initialize(_bus);
         DbUpdatedConsumer.OnDbUpdated += () =>
         {
-            DataGridService.UpdateDataGrid(PersonDataGrid);
+            _dataGridService.UpdateDataGrid();
         };
+
+        // first program start
+        _dataGridService.UpdateDataGrid();
 
         StartTimer();
     }

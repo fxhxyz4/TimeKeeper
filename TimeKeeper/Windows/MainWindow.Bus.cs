@@ -1,5 +1,5 @@
 using MassTransit;
-using TimeKeeper.Modules.DataBase;
+using MySql.Data.MySqlClient;
 
 namespace TimeKeeper;
 
@@ -8,14 +8,13 @@ public partial class MainWindow
     private async void Window_Loaded(object sender, RoutedEventArgs e)
     {
         await StartBusAsync();
-        _repo.UpdateDB();
     }
 
     private async Task StartBusAsync()
     {
-        var rabbitHost = _configuration["RabbitMq:HostName"];
-        var rabbitUser = _configuration["RabbitMq:UserName"];
-        var rabbitPass = _configuration["RabbitMq:Password"];
+        string rabbitHost = _configuration["RabbitMq:HostName"];
+        string rabbitUser = _configuration["RabbitMq:UserName"];
+        string rabbitPass = _configuration["RabbitMq:Password"];
 
         _bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
         {
@@ -36,6 +35,8 @@ public partial class MainWindow
 
     protected override async void OnClosed(EventArgs e)
     {
+        MySqlConnection.ClearAllPools();
+
         await _bus.StopAsync();
         base.OnClosed(e);
     }

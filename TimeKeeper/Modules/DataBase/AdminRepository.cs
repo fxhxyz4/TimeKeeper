@@ -29,6 +29,8 @@ class AdminRepository
         } catch (Exception ex)
         {
             ErrorNotifier.Display(ErrorMessages.DbTransactionError + " " + ex.Message);
+            MySqlConnection.ClearAllPools();
+
             return "";
         }
     }

@@ -5,13 +5,13 @@ namespace TimeKeeper.Modules.Controllers;
 
 public class BlockUserController
 {
-    private readonly BlockUserRepository _repository = new();
+    private readonly BlockUserRepository _repo = new();
 
     public bool IsSidBlocked(string sid)
     {
         try
         {
-            return _repository.IsSidBlocked(sid);
+            return _repo.IsSidBlocked(sid);
         }
         catch (Exception ex)
         {
@@ -24,7 +24,7 @@ public class BlockUserController
     {
         try
         {
-            _repository.BlockSid(sid);
+            _repo.BlockSid(sid);
         }
         catch (Exception ex)
         {

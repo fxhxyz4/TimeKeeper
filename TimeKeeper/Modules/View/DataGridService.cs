@@ -5,9 +5,16 @@ using TimeKeeper.Modules.Utils;
 
 namespace TimeKeeper.Modules.View;
 
-class DataGridService
+public class DataGridService
 {
-    public static void AddToDataGrid(DataGrid dataGrid, Person person)
+    private readonly DataGrid _dataGrid;
+
+    public DataGridService(DataGrid personDataGrid)
+    {
+        _dataGrid = personDataGrid;
+    }
+
+    public void AddToDataGrid(Person person)
     {
         bool exists = PersonList.GetAll().Any(p => p.Equals(person));
 
@@ -17,18 +24,17 @@ class DataGridService
             return;
         }
 
-        PersonList.Add(person);
-        UpdateDataGrid(dataGrid);
+        UpdateDataGrid();
     }
 
-    public static void ClearDataGrid(DataGrid dataGrid)
+    public void ClearDataGrid()
     {
-        dataGrid.ItemsSource = null;
+        _dataGrid.ItemsSource = null;
     }
 
-    public static void UpdateDataGrid(DataGrid dataGrid, List<Person> people = null)
+    public void UpdateDataGrid(List<Person> people = null)
     {
-        dataGrid.ItemsSource = null;
-        dataGrid.ItemsSource = people ?? PersonController.GetAllPersons();
+        _dataGrid.ItemsSource = null;
+        _dataGrid.ItemsSource = people ?? PersonController.GetAllPersons();
     }
 }

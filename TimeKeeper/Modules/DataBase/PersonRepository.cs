@@ -8,7 +8,7 @@ namespace TimeKeeper.Modules.DataBase;
 
 public class PersonRepository
 {
-    public async Task Add(Person person, IBus bus)
+    public async Task Add(Person person)
     {
         try
         {
@@ -29,42 +29,50 @@ public class PersonRepository
 
                 cmd.ExecuteNonQuery();
             }
-
-            await bus.Publish(new DbChangedEvent("add", "ready"));
         }
         catch (Exception ex)
         {
             ErrorNotifier.Display(ErrorMessages.DbTransactionError + " " + ex.Message);
+            MySqlConnection.ClearAllPools();
         }
     }
 
     public List<Person> GetAll()
     {
-        List<Person> people = new List<Person>();
-
-        using var conn = DatabaseConnector.GetConnection();
-        conn.Open();
-
-        string query = "SELECT * FROM Persons";
-        using var cmd = new MySqlCommand(query, conn);
-
-        using var reader = cmd.ExecuteReader();
-
-        while (reader.Read())
+        try
         {
-            people.Add(new Person(
-                reader.GetString("first_name"),
-                reader.GetString("last_name"),
-                reader.GetInt32("year_of_birth"),
-                reader.GetString("rank"),
-                reader.GetString("position")
-            ));
-        }
+            List<Person> people = new List<Person>();
 
-        return people;
+            using var conn = DatabaseConnector.GetConnection();
+            conn.Open();
+
+            string query = "SELECT * FROM Persons";
+            using var cmd = new MySqlCommand(query, conn);
+
+            using var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                people.Add(new Person(
+                    reader.GetString("first_name"),
+                    reader.GetString("last_name"),
+                    reader.GetInt32("year_of_birth"),
+                    reader.GetString("rank"),
+                    reader.GetString("position")
+                ));
+            }
+
+            return people;
+        } catch (Exception ex)
+        {
+            ErrorNotifier.Display(ErrorMessages.DbTransactionError + " " + ex.Message);
+            MySqlConnection.ClearAllPools();
+
+            return new List<Person>();
+        }
     }
 
-    public void UpdateDB()
+    public async Task UpdateDB()
     {
         try
         {
@@ -74,33 +82,36 @@ public class PersonRepository
             string query = "SELECT `first_name`, `last_name`, `year_of_birth`, `rank`, `position`, `date_time` FROM Persons";
 
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            using (MySqlDataReader reader = cmd.ExecuteReader())
             {
-                PersonList.Clear();
-
-                while (reader.Read())
+                using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
-                    string firstName = reader.GetString("first_name");
-                    string secondName = reader.GetString("last_name");
+                    PersonList.Clear();
 
-                    int year = reader.GetInt32("year_of_birth");
-                    string rank = reader.GetString("rank");
+                    while (reader.Read())
+                    {
+                        string firstName = reader.GetString("first_name");
+                        string secondName = reader.GetString("last_name");
 
-                    string position = reader.GetString("position");
-                    DateTime date = reader.GetDateTime("date_time");
+                        int year = reader.GetInt32("year_of_birth");
+                        string rank = reader.GetString("rank");
 
-                    Person person = new Person(firstName, secondName, year, rank, position);
-                    PersonList.Add(person);
+                        string position = reader.GetString("position");
+                        DateTime date = reader.GetDateTime("date_time");
+
+                        Person person = new Person(firstName, secondName, year, rank, position);
+                        PersonList.Add(person);
+                    }
                 }
             }
         }
         catch (Exception ex)
         {
             ErrorNotifier.Display(ErrorMessages.DbTransactionError + " " + ex.Message);
+            MySqlConnection.ClearAllPools();
         }
     }
 
-    public async Task Delete(Person person, IBus bus)
+    public async Task Delete(Person person)
     {
         try
         {
@@ -120,12 +131,11 @@ public class PersonRepository
 
                 cmd.ExecuteNonQuery();
             }
-
-            await bus.Publish(new DbChangedEvent("delete", "ready"));
         }
         catch (Exception ex)
         {
             ErrorNotifier.Display(ErrorMessages.DbTransactionError + " " + ex.Message);
+            MySqlConnection.ClearAllPools();
         }
     }
 }

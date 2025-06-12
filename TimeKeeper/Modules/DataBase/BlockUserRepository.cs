@@ -19,6 +19,7 @@ class BlockUserRepository
         }
         catch (Exception ex)
         {
+            MySqlConnection.ClearAllPools();
             throw new Exception("DB insert failed", ex);
         }
     }
@@ -40,6 +41,7 @@ class BlockUserRepository
         }
         catch (Exception ex)
         {
+            MySqlConnection.ClearAllPools();
             throw new Exception("DB query failed", ex);
         }
     }
