@@ -11,7 +11,7 @@ class DatabaseConnector
         try
         {
             string root = Directory.GetCurrentDirectory();
-            string dotenvPath = Path.Combine(root, "env", ".env");
+            string dotenvPath = Path.Combine(root, ".env");
 
             DotEnv.Load(dotenvPath);
             _connectionString = DotEnv.CreateConnectionString();

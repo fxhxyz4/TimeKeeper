@@ -36,8 +36,8 @@ public partial class MainWindow
     protected override async void OnClosed(EventArgs e)
     {
         MySqlConnection.ClearAllPools();
-
         await _bus.StopAsync();
+
         base.OnClosed(e);
     }
 }

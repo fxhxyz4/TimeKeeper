@@ -4,6 +4,7 @@
 ########
 # Misc #
 ########
+Enc/
 csv
 json
 appsettings.json

@@ -8,9 +8,8 @@
     <ApplicationIcon>icon\consul.ico</ApplicationIcon>
   </PropertyGroup>
 
-  <!-- UPDATE DOTENV FILE -->
   <ItemGroup>
-    <None Update="./env/.env">
+    <None Update=".env">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
      <None Update="./logs/logger.log">

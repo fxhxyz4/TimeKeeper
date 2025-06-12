@@ -1,7 +1,7 @@
 using System.Security.Principal;
 using TimeKeeper.Modules.Utils;
-using TimeKeeper.Windows;
 using TimeKeeper.Modules.Controllers;
+using TimeKeeper.Windows;
 
 namespace TimeKeeper;
 
@@ -10,7 +10,8 @@ public partial class LoginWindow : Window
     private BlockUserController _controller = new BlockUserController();
     private string _sid = WindowsIdentity.GetCurrent().User?.Value;
 
-    private int _blockCount = 0;
+    public int _blockCount = 0;
+
 
     /// <summary>
     /// Blocked user using SID name

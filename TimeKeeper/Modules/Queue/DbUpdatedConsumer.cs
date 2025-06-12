@@ -1,7 +1,6 @@
 using MassTransit;
 using TimeKeeper.Modules.Queue;
 using TimeKeeper.Modules.Utils;
-using TimeKeeper.Modules.DataBase;
 using TimeKeeper.Modules.Controllers;
 
 public class DbUpdatedConsumer : IConsumer<DbChangedEvent>
