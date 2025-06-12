@@ -5,7 +5,7 @@ using TimeKeeper.Modules.Controllers;
 
 public class DbUpdatedConsumer : IConsumer<DbChangedEvent>
 {
-    private readonly PersonController _controller;
+    private PersonController _controller;
     public static event Action? OnDbUpdated;
 
     private static IBus _bus;
@@ -19,8 +19,8 @@ public class DbUpdatedConsumer : IConsumer<DbChangedEvent>
     {
         try
         {
-            PersonController controller = new PersonController(_bus);
-            await controller.UpdateDb();
+            _controller = new PersonController(_bus);
+            await _controller.UpdateDb();
 
             Application.Current.Dispatcher.Invoke(() => OnDbUpdated?.Invoke());
         }
