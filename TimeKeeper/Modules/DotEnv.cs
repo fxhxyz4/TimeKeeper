@@ -12,7 +12,7 @@ class DotEnv
     public static void Load(string filePath)
     {
         if (!File.Exists(filePath))
-            ErrorNotifier.Display(ErrorMessages.FileNotFoundError);
+            ErrorNotifier.Display(ErrorMessages.FileNotFoundError + " " + filePath);
 
         foreach (var line in File.ReadAllLines(filePath))
         {

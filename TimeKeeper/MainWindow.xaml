@@ -6,6 +6,8 @@
         xmlns:svg="http://sharpvectors.codeplex.com/runtime/"
         xmlns:local="clr-namespace:TimeKeeper"
         mc:Ignorable="d"
+        KeyDown="PersonDataGrid_PreviewKeyDown"
+        Focusable="True"
         Title="TimeKeeper" Height="640" Width="820" MinHeight="580" MinWidth="720" ShowInTaskbar="true" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" Background="#1C1C1C"
         Loaded="Window_Loaded">
 

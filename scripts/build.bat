@@ -33,3 +33,15 @@ if errorlevel 1 (
 
 echo 🚀 Build completed for framework (%VERSION_TYPE%)...
 echo ✅ Done!
+
+dotnet publish -c Release --self-contained true -r win-x64
+echo ✅ Release publishing!
+
+cd TimeKeeper
+cd publish
+
+del .env
+del appsettings.json
+
+echo "" > .env.example
+echo "" > appsettings.example.json

@@ -3,6 +3,7 @@ using System.Windows.Input;
 using TimeKeeper.Modules.Data;
 using TimeKeeper.Modules.Enum;
 using TimeKeeper.Modules.Utils;
+using TimeKeeper.Modules.Controllers;
 
 namespace TimeKeeper;
 
@@ -50,6 +51,19 @@ public partial class MainWindow
 
                     e.Handled = true;
                 }
+            }
+
+            if (e.Key == Key.R && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                PersonList.Clear();
+                List<Person> persons = PersonController.GetAllPersons();
+
+                foreach (Person per in persons)
+                {
+                    PersonList.Add(per);
+                }
+
+                _dataGridService.UpdateDataGrid();
             }
         } catch (Exception ex)
         {
