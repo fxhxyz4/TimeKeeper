@@ -36,6 +36,7 @@ class Files
 
             using (StreamWriter output = new StreamWriter(csvFilePath, append: true))
             {
+                csvMessage += $", {Time.CurrentDateForFile} {Time.CurrentTimeStamp}";
                 output.WriteLine($"{csvMessage ?? "No log message!"}");
             }
         }
