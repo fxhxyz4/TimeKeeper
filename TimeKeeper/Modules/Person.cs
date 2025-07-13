@@ -11,6 +11,8 @@ public class Person
     private string _position;
     private string _date;
 
+    private string _reason;
+
     public string FirstName
     {
         get => _firstName;
@@ -47,16 +49,26 @@ public class Person
         set => _date = value;
     }
 
+    public string Reason
+    {
+        get => _reason;
+        set => _reason = value;
+    }
+
     public Person() { }
 
-    public Person(string firstName, string lastName, int yearOfBirth, string rank, string position)
+    public Person(string firstName, string lastName, int yearOfBirth, string rank, string position, string reason)
     {
         _firstName = firstName;
         _lastName = lastName;
+
         _yearOfBirth = yearOfBirth;
         _rank = rank;
+
         _position = position;
         _date = $"{Time.CurrentDateForFile} {Time.CurrentTimeStamp}";
+
+        _reason = reason;
     }
 
     public virtual bool Equals(object? obj)
@@ -76,6 +88,6 @@ public class Person
 
     public virtual string ToString()
     {
-        return $"{FirstName} {LastName}, {YearOfBirth}, {Rank}, {Position}";
+        return $"{FirstName} {LastName}, {YearOfBirth}, {Rank}, {Position}, {Reason.Replace("\n", " ")}";
     }
 }

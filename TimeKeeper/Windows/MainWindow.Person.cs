@@ -19,14 +19,16 @@ public partial class MainWindow
         string rankDescription = rankItem?.Description.Trim() ?? "";
         string positionDescription = positionItem?.Description.Trim() ?? "";
 
+        string reason = ReasonTextBox.Text.Trim();
+
         ClearInput();
 
         if (CheckStaff.IsStaff(positionItem.Value))
         {
-            return new Staff(firstName, secondName, year, rankDescription, positionDescription, true);
+            return new Staff(firstName, secondName, year, rankDescription, positionDescription, reason, true);
         } else
         {
-            return new Person(firstName, secondName, year, rankDescription, positionDescription);
+            return new Person(firstName, secondName, year, rankDescription, positionDescription, reason);
         }
     }
 
@@ -37,11 +39,13 @@ public partial class MainWindow
 
         BirthYearTextBox.Text = "";
 
-        var rankToSelect = RankComboBox.Items.Cast<EnumItem<Rank>>().FirstOrDefault(x => x.Value == Rank.Rekrut);
+        var rankToSelect = RankComboBox.Items.Cast<EnumItem<Rank>>().FirstOrDefault(x => x.Value == Rank.Vidsutne);
         RankComboBox.SelectedItem = rankToSelect;
 
         var posToSelect = PositionComboBox.Items.Cast<EnumItem<Position>>().FirstOrDefault(x => x.Value == Position.Gosti);
         PositionComboBox.SelectedItem = posToSelect;
+
+        ReasonTextBox.Text = "-";
     }
 
     private async void addBtn_Click(object sender, EventArgs e)
@@ -81,7 +85,8 @@ public partial class MainWindow
             || string.IsNullOrWhiteSpace(person.LastName)
             || person.YearOfBirth < 1890 || person.YearOfBirth > DateTime.Now.Year
             || string.IsNullOrWhiteSpace(person.Rank)
-            || string.IsNullOrWhiteSpace(person.Position))
+            || string.IsNullOrWhiteSpace(person.Position)
+            || string.IsNullOrWhiteSpace(person.Reason))
         {
             return false;
         }

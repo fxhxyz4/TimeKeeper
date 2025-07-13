@@ -2,6 +2,9 @@ namespace TimeKeeper.Modules.Enum;
 
 public enum Rank
 {
+    [Description("вiдсутнє")]
+    Vidsutne,
+
     [Description("рекрут")]
     Rekrut,
 
