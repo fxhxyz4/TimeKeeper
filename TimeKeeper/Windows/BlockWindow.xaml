@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeKeeper.Windows"
         mc:Ignorable="d"
-        Title="TimeKeeper" Height="640" Width="820" MinHeight="580" MinWidth="720" Background="White" Foreground="Red">
+        Title="TimeKeeper" Height="700" Width="820" MinHeight="680" MinWidth="720" Background="White" Foreground="Red">
     <Grid>
         <TextBlock
             Text="Blocked"
