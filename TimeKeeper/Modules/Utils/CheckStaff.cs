@@ -5,6 +5,8 @@ public static class CheckStaff
 {
     private static readonly HashSet<Position> _staffPositions = new()
     {
+        Position.Gosti,
+        Position.Abiturient,
         Position.Asistent,
         Position.Vykladach,
         Position.StarshyiVykladach,
