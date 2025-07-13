@@ -34,7 +34,7 @@ if errorlevel 1 (
 echo 🚀 Build completed for framework (%VERSION_TYPE%)...
 echo ✅ Done!
 
-dotnet publish -c Release --self-contained true -r win-x64
+dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true
 echo ✅ Release publishing!
 
 cd TimeKeeper
