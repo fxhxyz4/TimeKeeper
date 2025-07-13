@@ -36,7 +36,7 @@ CREATE TABLE Admin (
 
 LOCK TABLES Admin WRITE;
 /*!40000 ALTER TABLE Admin DISABLE KEYS */;
-INSERT INTO Admin VALUES (1,'admin','8nc8w1ncks91w001s9xj1w9jdnxw91kxa9xk31cz28lpoai38snvba8r34jfs9q1');
+INSERT INTO Admin VALUES (1,'admin','8dsa8da0a7a635fe5f5c65d360dasf3136770sdad12448a357d2aedd7a64f1ef');
 /*!40000 ALTER TABLE Admin ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -75,12 +75,13 @@ CREATE TABLE Persons (
   first_name varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   last_name varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   year_of_birth year NOT NULL DEFAULT '1970',
-  rank enum('рекрут','солдат','старший солдат','молодший сержант','сержант','старший сержант','головний сержант','перший сержант','штаб-сержант','майстер-сержант','старший майстер-сержант','головний майстер-сержант','молодший лейтенант','лейтенант','старший лейтенант','капітан','майор','підполковник','полковник','бригадний генерал','генерал-майор','генерал-лейтенант','генерал','головнокомандувач') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  rank enum('вiдсутнє','рекрут','солдат','старший солдат','молодший сержант','сержант','старший сержант','головний сержант','перший сержант','штаб-сержант','майстер-сержант','старший майстер-сержант','головний майстер-сержант','молодший лейтенант','лейтенант','старший лейтенант','капітан','майор','підполковник','полковник','бригадний генерал','генерал-майор','генерал-лейтенант','генерал','головнокомандувач') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   position enum('гість','абітурієнт','курсант','асистент','викладач','старший викладач','курсовий оффіцер','начальник курсу','заступник начальника','начальник') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   date_time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  reason longtext COLLATE utf8mb4_general_ci,
   PRIMARY KEY (id),
   UNIQUE KEY first_name (first_name,last_name,year_of_birth)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,12 +92,11 @@ LOCK TABLES Persons WRITE;
 /*!40000 ALTER TABLE Persons DISABLE KEYS */;
 /*!40000 ALTER TABLE Persons ENABLE KEYS */;
 UNLOCK TABLES;
-
 --
 -- Dumping events for database 'TimeKeeper'
 --
 /*!50106 SET @save_time_zone= @@TIME_ZONE */ ;
-/*!50106 DROP EVENT IF EXISTS daily_cleanup */;
+/*!50106 DROP EVENT IF EXISTS cleanup */;
 DELIMITER ;;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;;
@@ -114,10 +114,45 @@ DELIMITER ;;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;;
 /*!50003 SET character_set_results = @saved_cs_results */ ;;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;;
+/*!50106 DROP EVENT IF EXISTS daily_cleanup */;;
+DELIMITER ;;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;;
+/*!50003 SET character_set_client  = utf8mb4 */ ;;
+/*!50003 SET character_set_results = utf8mb4 */ ;;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;;
+/*!50003 SET @saved_time_zone      = @@time_zone */ ;;
+/*!50003 SET time_zone             = 'SYSTEM' */ ;;
+/*!50106 CREATE*/ /*!50117 DEFINER=TimeKeeper_pencilrow`@%*/ /*!50106 EVENT `daily_cleanup ON SCHEDULE EVERY 1 DAY STARTS '2025-06-08 00:01:00' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM your_table WHERE date < CURDATE() */ ;;
+/*!50003 SET time_zone             = @saved_time_zone */ ;;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;;
+/*!50003 SET character_set_results = @saved_cs_results */ ;;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;;
+/*!50106 DROP EVENT IF EXISTS db_cleanup */;;
+DELIMITER ;;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;;
+/*!50003 SET character_set_client  = utf8mb4 */ ;;
+/*!50003 SET character_set_results = utf8mb4 */ ;;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;;
+/*!50003 SET @saved_time_zone      = @@time_zone */ ;;
+/*!50003 SET time_zone             = 'SYSTEM' */ ;;
+/*!50106 CREATE*/ /*!50117 DEFINER=TimeKeeper_pencilrow`@%*/ /*!50106 EVENT `db_cleanup ON SCHEDULE EVERY 1 DAY STARTS '2025-06-07 00:01:00' ON COMPLETION PRESERVE ENABLE DO DELETE FROM Persons WHERE DATE(date) < CURDATE() */ ;;
+/*!50003 SET time_zone             = @saved_time_zone */ ;;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;;
+/*!50003 SET character_set_results = @saved_cs_results */ ;;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;;
 DELIMITER ;
 /*!50106 SET TIME_ZONE= @save_time_zone */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
@@ -126,4 +161,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-07 15:32:24
+-- Dump completed on 2025-07-13 23:09:43
