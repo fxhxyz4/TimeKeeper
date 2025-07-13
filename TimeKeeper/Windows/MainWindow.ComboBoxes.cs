@@ -21,5 +21,7 @@ public partial class MainWindow
 
         PositionComboBox.ItemsSource = positions;
         PositionComboBox.SelectedIndex = 0;
+
+        ReasonTextBox.Text = "-";
     }
 }
