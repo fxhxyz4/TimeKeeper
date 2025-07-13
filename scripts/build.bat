@@ -1,4 +1,7 @@
 @echo off
+
+chcp 65001 >nul
+
 setlocal enabledelayedexpansion
 
 echo 🔧 Building the project...
@@ -43,5 +46,21 @@ cd publish
 del .env
 del appsettings.json
 
-echo "" > .env.example
-echo "" > appsettings.example.json
+cd bin/Debug/net8.0-windows
+del .env
+del appsettings.json
+
+cd ..
+cd ..
+cd Release/net8.0-windows/win-x64
+del .env
+del appsettings.json
+
+cd publish
+del .env
+del appsettings.json
+
+echo PORT=DB=HOST=USER=PASS= > .env.example
+echo {"RabbitMQ": {"HostName": "amqps://url","UserName": "user","Password": "pass"}} > appsettings.example.json
+
+pause
