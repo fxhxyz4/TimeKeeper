@@ -15,8 +15,8 @@ public sealed class Staff : Person
 
     public Staff() : base() { }
 
-    public Staff(string firstName, string lastName, int yearOfBirth, string rank, string position, bool isStaff)
-        : base(firstName, lastName, yearOfBirth, rank, position)
+    public Staff(string firstName, string lastName, int yearOfBirth, string rank, string position, string reason, bool isStaff)
+        : base(firstName, lastName, yearOfBirth, rank, position, reason)
     {
         _isStaff = isStaff;
     }
