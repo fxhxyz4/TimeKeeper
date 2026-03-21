@@ -8,7 +8,7 @@
 ![](https://img.shields.io/github/languages/top/fxhxyz4/TimeKeeper)
 ![](https://img.shields.io/github/downloads/fxhxyz4/TimeKeeper/total)
 ![](https://img.shields.io/github/languages/code-size/fxhxyz4/TimeKeeper)
-![](https://img.shields.io/github/license/fxhxyz4/TimeKeeper)
+![Static Badge](https://img.shields.io/badge/MIT%20License-blue)
 
 <img src="./assets/img/screen.png" width="500" height="380" />
     
