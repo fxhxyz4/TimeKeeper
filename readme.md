@@ -8,7 +8,7 @@
 ![](https://img.shields.io/github/languages/top/fxhxyz4/TimeKeeper)
 ![](https://img.shields.io/github/downloads/fxhxyz4/TimeKeeper/total)
 ![](https://img.shields.io/github/languages/code-size/fxhxyz4/TimeKeeper)
-![Static Badge](https://img.shields.io/badge/MIT%20License-blue)
+![Static Badge](https://img.shields.io/badge/Not%20MIT%20license%20(custom)-blue)
 
 <img src="./assets/img/screen.png" width="500" height="380" />
     
@@ -94,6 +94,6 @@
 <div align="center">
 
 ###  
-[Security](./security.md) | [License ua](./license.ua.md) | [Changelog](./changelog.md) | [License ru](./license.ru.md) | [Contribution](./contribution.md) | [License en](./license.md) | [Code of conduct](./code_of_conduct.md) | [Releases](https://github.com/fxhxyz4/TimeKeeper/releases)
+[Security](./security.md) | [License ua](./license.ua.md) | [Changelog](./changelog.md) | [Contribution](./contribution.md) | [License en](./license.md) | [Code of conduct](./code_of_conduct.md) | [Releases](https://github.com/fxhxyz4/TimeKeeper/releases)
 
 </div>
